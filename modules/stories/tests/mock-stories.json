@@ -1,0 +1,20 @@
+[
+    {
+        "by":"andyonthewings",
+        "descendants":125,
+        "_id":17612540,
+        "kids":[17612990,17615932,17615928,17612857,17612768,17612788,17612807,17615685,17615725,17613193,17612916,17614124,17614279,17612905,17613725,17613181,17613325,17614358,17613718],
+        "score":173,
+        "time":1532550741,
+        "title":"Removing jQuery from GitHub.com frontend",
+        "type":"story","url":"https://twitter.com/mislav/status/1022058279000842240"
+    },
+    {"by":"mathattack","descendants":19,"_id":17600305,"kids":[17613944,17614441,17612956,17614149,17613522],"score":105,"time":1532434707,"title":"Secret History of Silicon Valley (2009)","type":"story","url":"https://steveblank.com/secret-history/"},
+    {"by":"weinzierl","descendants":0,"_id":17607845,"score":14,"time":1532509200,"title":"IP addresses and routing","type":"story","url":"https://jvns.ca/blog/2018/07/24/ip-addresses-routing/"},
+    {"by":"josevalim","descendants":101,"_id":17612667,"kids":[17613220,17613127,17613034,17613567,17614219,17613215,17613075,17613899,17613466,17613078],"score":302,"time":1532551591,"title":"Elixir v1.7 released","type":"story","url":"https://elixir-lang.org/blog/2018/07/25/elixir-v1-7-0-released/"},
+    {"by":"monort","descendants":22,"_id":17608261,"kids":[17615571,17615874,17615389,17615163,17615036],"score":83,"time":1532515519,"title":"The year Mexico legalised drugs","type":"story","url":"https://www.historyextra.com/period/modern/1940-the-year-mexico-legalised-drugs/"},
+    {"by":"DoreenMichele","descendants":6,"_id":17614310,"kids":[17615914,17615501,17615721],"score":35,"time":1532566664,"title":"A Chicken Farmer Spy Who Tricked Hitler and Saved D-Day","type":"story","url":"https://www.warhistoryonline.com/world-war-ii/agent-garbo-the-brilliant-eccentric-chicken-farmer-spy-who-tricked-hitler-saved-d-day.html"},
+    {"by":"johnnycarcin","descendants":137,"_id":17610127,"kids":[17610918,17612178,17611651,17610732,17611319,17613160,17610686],"score":159,"time":1532533482,"title":"Address Verification and Full PGP Support","type":"story","url":"https://protonmail.com/blog/address-verification-pgp-support/"},
+    {"by":"ayw","_id":17615372,"score":1,"time":8,"title":"Scale API is hiring engineers to build human perception as a service","type":"job","url":"https://www.scaleapi.com/about#jobs"},
+    {"by":"Udik","descendants":6,"_id":17600255,"kids":[17615285,17614915,17615189],"score":31,"time":1532434135,"title":"Darwin comes to town: how cities are creating new species","type":"story","url":"https://www.theguardian.com/cities/2018/jul/23/darwin-comes-to-town-how-cities-are-creating-new-species"}
+]
