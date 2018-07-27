@@ -6,8 +6,12 @@ const puppeteerConfig = {
 
 let browser;
 
-const initPuppeteer = async () => {
+const initBrowser = async () => {
     browser = await puppeteer.launch(puppeteerConfig);
+}
+
+const closeBrowser = () => {
+    return browser.close();
 }
 
 const getBrowser = () => {
@@ -15,6 +19,7 @@ const getBrowser = () => {
 }
 
 module.exports = {
-    initPuppeteer,
-    getBrowser
+    initBrowser,
+    getBrowser,
+    closeBrowser
 }

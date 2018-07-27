@@ -1,9 +1,20 @@
-const { initDb, getDb, closeDb } = require('../db');
+const { initDb, closeDb } = require('../db');
+const { initBrowser, closeBrowser } = require('../puppeteer');
+
 
 before(async () => {
-    await initDb();
+    // await Promise.all[
+    //     initDb(),
+    //     initBrowser()
+    // ]
+    await initDb(),
+    await initBrowser()
+    
 });
 
 after(async () => {
-    await closeDb();
+    await Promise.all[
+        closeDb(),
+        closeBrowser()
+    ]
 })

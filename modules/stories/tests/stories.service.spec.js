@@ -13,8 +13,8 @@ describe('Story caching service', () => {
         collection = db.collection('topstories');
     });
     
-    beforeEach(() => {
-        collection.deleteMany({});
+    beforeEach(async () => {
+        await collection.deleteMany({});
     })
 
     it('should save stories to db', async () => {

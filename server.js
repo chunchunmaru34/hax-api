@@ -1,5 +1,5 @@
 const express = require('express');
-const { initPuppeteer } = require('./puppeteer');
+const { initBrowser } = require('./puppeteer');
 const { initDb } = require('./db');
 
 
@@ -8,7 +8,13 @@ const PORT = 5555;
 const app = express();
 
 (async () => {
-    await initPuppeteer();
+    app.use((req, res, next) => {
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        next();
+    })
+
+    await initBrowser();
     await initDb();
     require('./modules')(app);
 
