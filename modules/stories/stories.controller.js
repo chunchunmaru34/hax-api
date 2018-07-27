@@ -2,11 +2,19 @@ const { getTopStoriesIds } = require('../../services/hackernews-api/stories');
 const { getTopStoriesDetails } = require('./stories.service');
 
 const getTopStories = async (req, res) => {
-    const { page } = req.query;
+    const page = +req.query.page;
+    const pageSize = +req.query.pageSize;
 
-    const ids = await getTopStoriesIds();
+    let ids = await getTopStoriesIds();
+    
+    if (page && pageSize) {
+        const pageStart = (page - 1) * pageSize;
+        const pageEnd = pageStart + pageSize;
+        ids = ids.slice(pageStart, pageEnd);
+    }
+
     const stories = await getTopStoriesDetails(ids);
-    //TODO: paginate
+    
     return res.json(stories);
 }
 
