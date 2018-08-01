@@ -1,25 +1,82 @@
+const cheerio = require('cheerio');
+
 const { getBrowser } = require('../../puppeteer');
+const { getDb } = require('../../db');
+
 
 const browser = getBrowser();
+const collection = getDb().collection('pagepreviews');
+
+const lookForPreview = async ({ storyId, url }) => {
+    let preview = await collection.findOne({ _id: storyId });
+
+    if (preview) {
+        return preview;
+    }
+
+    preview = await makePagePreview(url);
+    if (preview) {
+        await cachePagePreview({ preview, storyId });
+        return preview;
+    }
+}
 
 const makePagePreview = async (url) => {
+    if (url.endsWith('.pdf')) {
+        return null;
+    }
+
     const page = await browser.newPage();
-    await page.goto(url);
+    await page.goto(url, { timeout: 900000 });
+
+    const content = await page.content();
+    page.dom = cheerio.load(content);
 
     const title = await getTitle(page);
     const image = await getImage(page);
     const description = await getDescription(page);
 
+    await page.close();
+
     return { title , description, image }
 }
+
+const makePagePreviews = async (urls) => {
+    const promises = [];
+    urls.forEach(url => {
+        promises.push(makePagePreview(url));
+    });
+
+    return Promise.all(promises);
+}
+
+const cachePagePreview = ({ preview, storyId }) => {
+    preview._id = storyId;
+    return collection.insertOne(preview);
+}
+
+
+
 
 const getTitle = async (page) => {
     const titles = [];
     await page.$$('h1[class*=title]').then(results => titles.push(...results));
    
     if (!titles.length) {
-       await page.$$('h1').then(results => titles.push(results[0]));
+       await page.$$('h1').then(results => titles.push(...results));
     }
+
+    if (!titles.length) {
+        await page.$$('h2').then(results => titles.push(...results));
+    }
+
+    if (!titles.length) {
+        await page.$$('h3').then(results => titles.push(...results));
+    }
+
+    if (!titles.length) {
+        return null;
+     }
 
     const title = await titles[0].getProperty('innerText');
     const titleJson = await title.jsonValue();
@@ -28,14 +85,42 @@ const getTitle = async (page) => {
 }
 
 const getImage = async (page) => {
-    // const images = [];
-    // await page.$$('img').then(results => images.push(...results));
+    const doScreenShot = async () => {
+        const screenshot = await makeScreenshot(page);
+        return {
+            type: 'base64',
+            src: screenshot,
+        }
+    }
+    let pImages = await page.$$('img');
+    if (!pImages.length) {
+        return doScreenShot();
+    }
 
-    // const properties = [];
-    // images.forEach(image => properties.push(image.getProperties()));
-    // const results = await Promise.all(properties);
+    pImages = await pImages.map(image => Promise.all([
+        image.getProperty('width'),
+        image.getProperty('height'),
+        image.getProperty('src'),
+    ]));
+    pImages = await Promise.all(pImages);
+    pImages = await Promise.all(pImages.map(image => Promise.all(image.map(prop => prop.jsonValue()))));
 
-    return makeScreenshot(page);
+    let metadata = pImages.map(params => ({ width: params[0], height: params[1], src: params[2] }));
+
+    metadata = metadata.filter(item => item.width && item.height);
+    if (!metadata.length) {
+        return doScreenShot();
+    }
+    metadata.sort((a, b) => b.width * b.height - a.width * a.height);
+
+    if (metadata[0].width < 250) {
+        return doScreenShot();
+    };
+
+    return {
+        type: 'url',
+        src: metadata[0].src
+    }
 }
 
 const makeScreenshot = async (page) => {
@@ -75,7 +160,9 @@ const getDescription = async (page) => {
 
 module.exports = {
     makePagePreview,
+    makePagePreviews,
     getTitle,
     getDescription,
-    getImage
+    getImage,
+    lookForPreview
 }

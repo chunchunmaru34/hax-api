@@ -1,8 +1,5 @@
-const { getBrowser } = require('../../puppeteer')
-const { getDb } = require('../../db');
+const { lookForPreview } = require('./page-preview.service');
 
-
-const browser = getBrowser();
 
 const getPagePreview = async (req, res, next) => {
     try {
@@ -16,24 +13,18 @@ const getPagePreview = async (req, res, next) => {
     } catch (error) {
         return next(error);
     }
-   
 }
 
-const { makePagePreview } = require('page-preview.service');
-
-const getPagePreview = async (req, res) => {
-    const { url } = req.query;
-
-    if (!url) {
-        return next(new Error('No url provided'));
-    }
-
-    const preview = await makePagePreview();
-
-    return preview;
+const getManyPagePreviews = (ws, req) => {
+    ws.on('message', (msg) => {
+        const previewInfo = JSON.parse(msg);
+        previewInfo.forEach(({ url, _id }) => url && lookForPreview({ url, storyId: _id }).then(preview => ws.send(JSON.stringify({ preview, _id }))).catch(console.log));
+    })
 }
 
 module.exports = (api) => {
-    api.get('/pagePreview', getPagePreview)
+    api.get('/pagePreview', getPagePreview);
+
+    api.ws('/pagePreviews', getManyPagePreviews);
 }
     
