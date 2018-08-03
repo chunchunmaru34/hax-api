@@ -1,6 +1,6 @@
 const assert = require('chai').assert;
 const cheerio = require('cheerio');
-const { getBrowser } = require('../../../puppeteer');
+const { getBrowser } = require('../../../services/puppeteer');
 
 describe('Page preview service', () => {
     let service;
@@ -20,7 +20,7 @@ describe('Page preview service', () => {
         assert.isNotNull(title);
     })
 
-    it.only('should always get image from article', async () => {
+    it('should always get image from article', async () => {
         // const URL = 'https://www.sparkfun.com/news/2571;
         const URL = 'https://www.bloomberg.com/news/features/2018-07-31/inside-the-life-of-waymo-s-driverless-test-family';
         page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.75 Safari/537.36');
@@ -30,6 +30,10 @@ describe('Page preview service', () => {
         const image = await service.getImage(page);
 
         assert.isNotNull(image);
+    })
+
+    it('should get color pallete from image', async () => {
+        
     })
 
     it('should get description from article if it have one', async () => {

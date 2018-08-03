@@ -1,6 +1,6 @@
 const cheerio = require('cheerio');
 
-const { getBrowser } = require('../../puppeteer');
+const { getBrowser } = require('../../services/puppeteer');
 const { getDb } = require('../../db');
 
 
@@ -122,6 +122,7 @@ const getImage = async (page) => {
         src: metadata[0].src
     }
 }
+
 
 const makeScreenshot = async (page) => {
     const viewPortWidth = page.viewport().width;

@@ -1,5 +1,5 @@
 const { initDb, closeDb } = require('../db');
-const { initBrowser, closeBrowser } = require('../puppeteer');
+const { initBrowser, closeBrowser } = require('../services/puppeteer');
 
 
 before(async () => {

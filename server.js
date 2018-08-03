@@ -2,7 +2,7 @@ const express = require('express');
 const compression = require('compression');
 const expressWs = require('express-ws');
 
-const { initBrowser } = require('./puppeteer');
+const { initBrowser } = require('./services/puppeteer');
 const { initDb } = require('./db');
 
 

@@ -37,8 +37,13 @@ const cacheStory = (story) => {
     // TODO: not implemented
 }
 
+const getStoryById = (id) => {
+    return collection.findOne({ _id: id });
+}
+
 module.exports = {
     getTopStoriesDetails,
     getCachedTopStories,
-    cacheStories
+    cacheStories,
+    getStoryById
 }
