@@ -5,7 +5,7 @@ const { getDb } = require('../../db');
 
 const browser = getBrowser();
 const db = getDb();
-const summariesCollection = db.collection('pagesummer');
+const summariesCollection = db.collection('pagesummaries');
 const storiesCollection = db.collection('topstories');
 
 
@@ -40,7 +40,9 @@ const cachePageSummary = async ({ id, summary }) => {
 const getArticleContent = async (url) => {
     const page = await browser.newPage();
     await page.goto(url);
-    return scrapArticle(page);
+    const content = await scrapArticle(page);
+    await page.close();
+    return content;
 }
 
 const scrapArticle = async (page) => {
@@ -58,5 +60,6 @@ const scrapArticle = async (page) => {
 
 
 module.exports = {
-    getPageSummary
+    getPageSummary,
+    getArticleContent
 }
