@@ -38,11 +38,15 @@ const cachePageSummary = async ({ id, summary }) => {
 }
 
 const getArticleContent = async (url) => {
-    const page = await browser.newPage();
-    await page.goto(url, { timeout: 999999});
-    const content = await scrapArticle(page);
-    await page.close();
-    return content;
+    let page;
+    try {
+        page = await browser.newPage();
+        await page.goto(url, { timeout: 60000});
+        const content = await scrapArticle(page);
+        return content;
+    } finally {
+        await page.close();
+    }
 }
 
 const scrapArticle = async (page) => {
@@ -61,5 +65,6 @@ const scrapArticle = async (page) => {
 
 module.exports = {
     getPageSummary,
-    getArticleContent
+    getArticleContent,
+    cachePageSummary
 }

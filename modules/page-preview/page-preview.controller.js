@@ -16,10 +16,12 @@ const getPagePreview = async (req, res, next) => {
 }
 
 const getManyPagePreviews = async (ws, req) => {
-    ws.on('message', (msg) => {
+    ws.on('message', async (msg) => {
         const previewInfos = JSON.parse(msg);
         
         for (info of previewInfos) {
+            const { url, _id } = info;
+    
             try {
                 const preview = await lookForPreview({ url, storyId: _id });
                 ws.send(JSON.stringify({ preview, _id}));    
