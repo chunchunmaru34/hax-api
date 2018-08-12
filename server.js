@@ -34,7 +34,8 @@ app.use(morgan('dev'));
     })
 
     const preloadContent = require('./preload-content');
-    let job = scheduler.scheduleJob('42,12 * * * *', preloadContent);
+    // await preloadContent();
+    let job = scheduler.scheduleJob('42,12 * * * *', () => preloadContent());
 
     app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 })()

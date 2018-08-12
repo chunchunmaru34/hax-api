@@ -24,21 +24,14 @@ const lookForPreview = async ({ storyId, url }) => {
 const makePagePreview = async (url) => {
     let page;
     try {
-        if (url.endsWith('.pdf')) {
+        if (url.endsWith('.pdf') || url.startsWith('https://github.com')) {
             return null;
         }
-    
+        
         page = await browser.newPage();
         await page.goto(url, { timeout: 60000 });
-    
-        const content = await page.content();
-        page.dom = cheerio.load(content);
-    
-        const title = await getTitle(page);
-        const image = await getImage(page);
-        const description = await getDescription(page);
-    
-        return { title , description, image }
+        const preview = scrapPagePreview(page);
+        return preview;
     } finally {
         await page.close();
     }
@@ -61,6 +54,17 @@ const cachePagePreview = ({ preview, storyId }) => {
 
 
 
+
+const scrapPagePreview = async (page) => {
+    const content = await page.content();
+    page.dom = cheerio.load(content);
+
+    const title = await getTitle(page);
+    const image = await getImage(page);
+    const description = await getDescription(page);
+
+    return { title , description, image };
+}
 
 const getTitle = async (page) => {
     const titles = [];
@@ -170,5 +174,6 @@ module.exports = {
     getDescription,
     getImage,
     lookForPreview,
-    cachePagePreview
+    cachePagePreview,
+    scrapPagePreview
 }

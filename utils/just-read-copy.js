@@ -414,7 +414,7 @@ function createSimplifiedOverlay() {
 
             // See if the pres have code in them
             var isPreNoCode = true;
-            if(elem.nodeName === "PRE" && !leavePres) {
+            if(elem.nodeName === "PRE") {
                 isPreNoCode = false;
 
                 for(var j = 0, len = elem.children.length; j < len; j++) {

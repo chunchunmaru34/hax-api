@@ -66,5 +66,6 @@ const scrapArticle = async (page) => {
 module.exports = {
     getPageSummary,
     getArticleContent,
-    cachePageSummary
+    cachePageSummary,
+    scrapArticle
 }
