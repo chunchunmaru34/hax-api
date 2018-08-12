@@ -10,7 +10,7 @@ const getSummary = async (req, res, next) => {
     }
 
     const content = await getPageSummary(+id);
-    return res.json(({ html: content.html }));
+    return res.json(({ html: content }));
     
 }
 

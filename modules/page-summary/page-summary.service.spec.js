@@ -2,7 +2,7 @@ const assert = require('chai').assert;
 
 const { getBrowser } = require('../../services/puppeteer');
 
-describe.only('Page summary service', () => {
+describe('Page summary service', () => {
     let service;
     let browser;
     before(async () => {

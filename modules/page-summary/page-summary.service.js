@@ -13,7 +13,7 @@ const getPageSummary = async (storyId) => {
     let summary = await summariesCollection.findOne({ _id: storyId });
 
     if (summary) {
-        return summary;
+        return summary.html;
     }
 
     let story = await storiesCollection.findOne({ _id: storyId });
@@ -27,7 +27,7 @@ const getPageSummary = async (storyId) => {
         await cachePageSummary({ id: storyId, summary });
     }
 
-    return { html: summary };
+    return summary;
 }
 
 const cachePageSummary = async ({ id, summary }) => {
