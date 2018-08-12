@@ -1,13 +1,10 @@
 const puppeteer = require('puppeteer');
 
 const puppeteerConfig = {
-    headless: false,
-    timeout: 0,
-    // slowMo: 1000,
-    // args: [
-    //     '--disable-extensions-except=/media/aliaksei/Storage/projects/test/page-parser/utils/just-read.crx',
-    //     '--load-extension=/media/aliaksei/Storage/projects/test/page-parser/utils/just-read.crx',
-    // ]
+    // headless: false,
+    timeout: 300000,
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--headless', '--disable-gpu'],
+    executablePath: '/usr/bin/chromium-browser'
 }
 
 let browser;

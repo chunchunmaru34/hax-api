@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start-prod": "export NODE_ENV=production&& node ./server.js",
-    "start-dev": "export NODE_ENV=development&& nodemon server.js",
-    "test": "export NODE_ENV=development&& mocha --file ./tests/hooks.js ./**/*.spec.js -u tdd --timeout 99999 --colors  ./tests --recursive"
+    "start-prod": "set NODE_ENV=production&& node ./server.js",
+    "start-dev": "set NODE_ENV=development&& nodemon server.js",
+    "test": "set NODE_ENV=development&& mocha --file ./tests/hooks.js ./**/*.spec.js -u tdd --timeout 99999 --colors  ./tests --recursive"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +20,7 @@
     "lodash": "^4.17.10",
     "mocha": "^5.2.0",
     "mongodb": "^3.1.1",
+    "morgan": "^1.9.0",
     "nodemon": "^1.18.3",
     "puppeteer": "^1.6.0"
   }

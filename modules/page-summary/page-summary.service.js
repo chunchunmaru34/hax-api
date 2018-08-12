@@ -39,7 +39,7 @@ const cachePageSummary = async ({ id, summary }) => {
 
 const getArticleContent = async (url) => {
     const page = await browser.newPage();
-    await page.goto(url);
+    await page.goto(url, { timeout: 999999});
     const content = await scrapArticle(page);
     await page.close();
     return content;

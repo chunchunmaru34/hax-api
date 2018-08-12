@@ -1,6 +1,7 @@
 const express = require('express');
 const compression = require('compression');
 const expressWs = require('express-ws');
+const morgan = require('morgan');
 
 const { initBrowser } = require('./services/puppeteer');
 const { initDb } = require('./db');
@@ -10,6 +11,7 @@ const PORT = 5555;
 
 const app = express();
 expressWs(app);
+app.use(morgan('dev'));
 
 (async () => {
     app.use(compression());
